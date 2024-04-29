@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,8 @@
 		AD4B45442BDACFF0003F2076 /* LLM in Frameworks */ = {isa = PBXBuildFile; productRef = AD4B45432BDACFF0003F2076 /* LLM */; };
 		AD4B45462BDACFF0003F2076 /* MNIST in Frameworks */ = {isa = PBXBuildFile; productRef = AD4B45452BDACFF0003F2076 /* MNIST */; };
 		ADF3559E2BDAE7D400372851 /* DeviceStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF3559D2BDAE7D400372851 /* DeviceStat.swift */; };
+		ADF355A22BDB338600372851 /* Transformers in Frameworks */ = {isa = PBXBuildFile; productRef = ADF355A12BDB338600372851 /* Transformers */; };
+		ADF355A62BDB40B600372851 /* LLMTextBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF355A52BDB40B600372851 /* LLMTextBubble.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,7 @@
 		AD4B453B2BDACBAE003F2076 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ADF3559D2BDAE7D400372851 /* DeviceStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStat.swift; sourceTree = "<group>"; };
 		ADF3559F2BDAE91200372851 /* llm-therapy-test.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "llm-therapy-test.entitlements"; sourceTree = "<group>"; };
+		ADF355A52BDB40B600372851 /* LLMTextBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMTextBubble.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADF355A22BDB338600372851 /* Transformers in Frameworks */,
 				AD4B45462BDACFF0003F2076 /* MNIST in Frameworks */,
 				AD4B45442BDACFF0003F2076 /* LLM in Frameworks */,
 			);
@@ -58,6 +62,7 @@
 		AD4B45332BDACBAB003F2076 /* llm-therapy-test */ = {
 			isa = PBXGroup;
 			children = (
+				ADF355A42BDB40A600372851 /* Views */,
 				ADF3559F2BDAE91200372851 /* llm-therapy-test.entitlements */,
 				ADF3559C2BDAE7BF00372851 /* ViewModels */,
 				AD4B45342BDACBAB003F2076 /* llm_therapy_testApp.swift */,
@@ -84,6 +89,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		ADF355A42BDB40A600372851 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ADF355A52BDB40B600372851 /* LLMTextBubble.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,6 +116,7 @@
 			packageProductDependencies = (
 				AD4B45432BDACFF0003F2076 /* LLM */,
 				AD4B45452BDACFF0003F2076 /* MNIST */,
+				ADF355A12BDB338600372851 /* Transformers */,
 			);
 			productName = "llm-therapy-test";
 			productReference = AD4B45312BDACBAB003F2076 /* llm-therapy-test.app */;
@@ -134,6 +148,7 @@
 			mainGroup = AD4B45282BDACBAB003F2076;
 			packageReferences = (
 				AD4B45422BDACFF0003F2076 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */,
+				ADF355A02BDB338600372851 /* XCLocalSwiftPackageReference "../../swift-ml-packages/swift-transformers" */,
 			);
 			productRefGroup = AD4B45322BDACBAB003F2076 /* Products */;
 			projectDirPath = "";
@@ -161,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADF355A62BDB40B600372851 /* LLMTextBubble.swift in Sources */,
 				AD4B45372BDACBAB003F2076 /* ContentView.swift in Sources */,
 				ADF3559E2BDAE7D400372851 /* DeviceStat.swift in Sources */,
 				AD4B45352BDACBAB003F2076 /* llm_therapy_testApp.swift in Sources */,
@@ -374,6 +390,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		ADF355A02BDB338600372851 /* XCLocalSwiftPackageReference "../../swift-ml-packages/swift-transformers" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../swift-ml-packages/swift-transformers";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		AD4B45422BDACFF0003F2076 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -395,6 +418,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AD4B45422BDACFF0003F2076 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
 			productName = MNIST;
+		};
+		ADF355A12BDB338600372851 /* Transformers */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Transformers;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

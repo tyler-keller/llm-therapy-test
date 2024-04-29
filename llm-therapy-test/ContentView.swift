@@ -14,7 +14,7 @@ import Tokenizers
 
 struct ContentView: View {
     @State var llm = LLMEvaluator()
-    @State var prompt = ""
+    @State var prompt = "test"
     @Environment(DeviceStat.self) private var deviceStat
 
     var body: some View {
@@ -87,7 +87,7 @@ let customPhi3Config = ModelConfiguration(
     id: "mlx-community/Phi-3-mini-4k-instruct-4bit-no-q-embed"
 ) {
     prompt in
-    "<s><|system|>You are an AI-powered counselor specialized in cognitive behavioral therapy. Your primary function is to engage users in self-reflection, challenge negative thought patters, and guide them towards adaptive behaviors. Your first step is always to get information about what's troubling the user. In subsequent responses, summarize the user's thoughts back to them, explain what they're feeling about the situation and why, then, ask the user a leading introspective question. Don't overpower the user with your own words, ask them leading questions and allow them to introspect. Be clear and concise, 2-3 sentences max. End your responses with <|endoftext|>.<|end|><|user|>\n\(prompt)<|end|>\n<|assistant|>\n"
+    "<s><|system|>You are an AI-powered counselor specialized in cognitive behavioral therapy. Your primary function is to engage users in self-reflection, challenge negative thought patters, and guide them towards adaptive behaviors. Your first step is always to get information about what's troubling the user. In subsequent responses, summarize the user's thoughts back to them, explain what they're feeling about the situation and why, then, ask the user a leading introspective question. Don't overpower the user with your own words, ask them leading questions and allow them to introspect. Be clear and concise, 2-3 sentences max. End your responses with a newline. Try to take a personal approach to this conversation.<|end|><|user|>\n\(prompt)<|end|>\n<|assistant|>\n"
 }
 
 
@@ -112,7 +112,7 @@ class LLMEvaluator {
     /// update the display every N tokens -- 4 looks like it updates continuously
     /// and is low overhead.  observed ~15% reduction in tokens/s when updating
     /// on every token
-    let displayEveryNTokens = 4
+    let displayEveryNTokens = 1
 
     enum LoadState {
         case idle
@@ -139,8 +139,6 @@ class LLMEvaluator {
             self.modelInfo =
                 "Loaded \(modelConfiguration.id).  Weights: \(MLX.GPU.activeMemory / 1024 / 1024)M"
             loadState = .loaded(model, tokenizer)
-            print(tokenizer.eosToken)
-//            tokenizer.eosToken = "<|end|>"
             return (model, tokenizer)
 
         case .loaded(let model, let tokenizer):
@@ -175,14 +173,18 @@ class LLMEvaluator {
                 tokenizer: tokenizer
             ) { tokens in
                 // update the output -- this will make the view show the text as it generates
+                var endGen = false
                 if tokens.count % displayEveryNTokens == 0 {
                     let text = tokenizer.decode(tokens: tokens)
+//                    print(text)
+//                    print(tokenizer.encode(text: "<|endoftext|>").count)
+                    endGen = text.contains("\n") || text.contains("<|end|>") || text.contains("<|endoftext|>")
                     await MainActor.run {
                         self.output = text
                     }
                 }
 
-                if tokens.count >= maxTokens || tokenizer.decode(tokens: [tokens.last!]) == "<|end|>"{
+                if tokens.count >= maxTokens || endGen {
                     return .stop
                 } else {
                     return .more
